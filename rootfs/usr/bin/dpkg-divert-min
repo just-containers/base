@@ -2,4 +2,4 @@
 
 export LC_ALL=C
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y --no-install-recommends $@
+dpkg-divert $@

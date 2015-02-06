@@ -40,7 +40,7 @@ smiley() {
     if [ "$ret_val" = "0" ]; then
         echo -e "${txtgrn}:)"
     else
-        echo -e "${txtred}:( (`printf '0x%2x\n' $ret_val`)"
+        echo -e "${txtred}:( (`printf '0x%02x\n' $ret_val`)"
     fi
 }
 

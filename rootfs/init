@@ -1,0 +1,27 @@
+#!/bin/bash
+
+##
+## container environment variables
+##
+
+# destination folder
+dst=/etc
+
+# assure folder does exist
+mkdir -p $dst/container_environment
+
+# dump
+env                                            | \
+awk -F "=" '{ print $1; }'                     | \
+# filter these?
+#grep -ve "HOME\|USER\|GROUP\|UID\|GID\|SHELL" | \
+while read line; do
+  # folder
+  echo ${!line} > $dst/container_environment/$line;
+  # export file
+  echo "export $line=${!line}" >> $dst/container_environment.sh
+done
+
+##
+## perms
+##
