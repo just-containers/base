@@ -1,4 +1,0 @@
-root:root:0644:/etc/perms.d/base
-root:root:0644:/root/.bashrc
-root:root:0755:/usr/bin/apt-get-install-min
-root:root:0755:/usr/bin/dpkg-min

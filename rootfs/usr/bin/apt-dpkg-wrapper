@@ -1,5 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 export LC_ALL=C
 export DEBIAN_FRONTEND=noninteractive
-dpkg-divert $@
+
+bin=$1
+shift
+$bin $@
