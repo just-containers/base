@@ -13,11 +13,11 @@ RUN chmod +x /usr/bin/apt-dpkg-wrapper /usr/bin/apt-get-install
 
 # create *min files for apt* and dpkg* in order to avoid issues with locales
 # and interactive interfaces
-RUN ls /usr/bin/apt* /usr/bin/dpkg* |                                        \
-    while read line; do                                                      \
-      min=$line-min;                                                         \
-      printf "#%s/bin/sh\n/usr/bin/apt-dpkg-wrapper $line \$@\n" '!' > $min; \
-      chmod +x $min;                                                         \
+RUN ls /usr/bin/apt* /usr/bin/dpkg* |                                    \
+    while read line; do                                                  \
+      min=$line-min;                                                     \
+      printf '#!/bin/sh\n/usr/bin/apt-dpkg-wrapper '$line' $@\n' > $min; \
+      chmod +x $min;                                                     \
     done
 
 ##
@@ -76,6 +76,10 @@ RUN tar xvfz /tmp/execline.tar.gz -C /
 # s6 init system
 ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/s6-2.1.0.1-linux-amd64.tar.gz /tmp/s6.tar.gz
 RUN tar xvfz /tmp/s6.tar.gz -C /
+
+# s6 portable utils
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/s6-portable-utils-2.0.0.1-linux-amd64.tar.gz /tmp/s6-portable-utils.tar.gz
+RUN tar xvfz /tmp/s6-portable-utils.tar.gz -C /
 
 ##
 ## INIT
