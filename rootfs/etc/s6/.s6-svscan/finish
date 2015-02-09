@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-for file in /etc/s6/*/finish; do
-   $file
-done
+#for file in /etc/s6/*/finish; do
+#   $file
+#done

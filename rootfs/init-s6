@@ -1,0 +1,11 @@
+#!/usr/bin/execlineb -P
+
+# from: http://blog.akerl.org/2014/12/18/s6-simple-init-system/
+# also learned about process groups when I first booted and discovered that pid1 didn’t appear in htop.
+# it turns out that htop hides kernel threads by default, and if you don’t do anything, s6 is still in 
+# group 0, belonging to the kernel. Running s6-setsid sets the process group to match the current PID,
+# which in this case is 1.
+# s6-setsid -> s6-setsid: warning: unable to setsid: Operation not permitted
+
+s6-envdir /etc/container_environment
+s6-svscan -t0 /etc/s6

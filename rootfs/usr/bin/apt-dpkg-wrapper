@@ -5,4 +5,4 @@ export DEBIAN_FRONTEND=noninteractive
 
 bin=$1
 shift
-$bin $@
+exec "$bin" "$@"

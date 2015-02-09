@@ -7,7 +7,6 @@ MAINTAINER Gorka Lerchundi Osa <glertxundi@gmail.com>
 
 # root filesystem
 COPY rootfs /
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/s6-2.1.0.1-linux-amd64.tar.gz /
 
 # provide exec permission to basic utils
 RUN chmod +x /usr/bin/apt-dpkg-wrapper /usr/bin/apt-get-install
@@ -70,8 +69,23 @@ RUN apt-get-install-min language-pack-en                      && \
     echo -n en_US.UTF-8 > /etc/container_environment/LANG     && \
     echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 
+# execline
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/execline-2.0.2.0-linux-amd64.tar.gz /tmp/execline.tar.gz
+RUN tar xvfz /tmp/execline.tar.gz -C /
+
+# s6 init system
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/s6-2.1.0.1-linux-amd64.tar.gz /tmp/s6.tar.gz
+RUN tar xvfz /tmp/s6.tar.gz -C /
+
+##
+## INIT
+##
+
+RUN chmod +x /init /init-s6
+CMD ["/init"]
+
 ##
 ## CLEANUP
 ##
 
-#RUN apt-get-min clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get-min clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
