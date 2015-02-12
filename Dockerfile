@@ -8,8 +8,15 @@ MAINTAINER Gorka Lerchundi Osa <glertxundi@gmail.com>
 # root filesystem
 COPY rootfs /
 
+# fix-attrs
+ADD https://github.com/glerchundi/fix-attrs/releases/download/v0.3.0/fix-attrs-0.3.0-linux-amd64 /usr/bin/fix-attrs
+
 # provide exec permission to basic utils
-RUN chmod +x /usr/bin/apt-dpkg-wrapper /usr/bin/apt-get-install
+RUN chmod +x /usr/bin/apt-dpkg-wrapper \
+             /usr/bin/apt-get-install  \
+             /usr/bin/with-contenv     \
+             /usr/bin/ts               \
+             /usr/bin/fix-attrs
 
 # create *min files for apt* and dpkg* in order to avoid issues with locales
 # and interactive interfaces
@@ -32,9 +39,7 @@ RUN if [ ! -e /etc/dpkg/dpkg.cfg.d/docker-apt-speedup ]; then         \
 # prevent initramfs updates from trying to run grub and lilo.
 # https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189
-RUN export INITRD=no                               && \
-    mkdir -p /etc/container_environment            && \
-    echo -n no > /etc/container_environment/INITRD
+ENV INITRD no
 
 # enable Ubuntu Universe and Multiverse.
 RUN sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list   && \
@@ -63,11 +68,11 @@ RUN apt-get-install-min software-properties-common
 RUN apt-get-min dist-upgrade -y --no-install-recommends
 
 # fix locale.
-RUN apt-get-install-min language-pack-en                      && \
-    locale-gen en_US                                          && \
-    update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8       && \
-    echo -n en_US.UTF-8 > /etc/container_environment/LANG     && \
-    echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+ENV LANG en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+RUN apt-get-install-min language-pack-en        && \
+    locale-gen en_US                            && \
+    update-locale LANG=$LANG LC_CTYPE=$LC_CTYPE
 
 # execline
 ADD https://github.com/glerchundi/container-s6-builder/releases/download/v2.1.0.1/execline-2.0.2.0-linux-amd64.tar.gz /tmp/execline.tar.gz
@@ -85,7 +90,7 @@ RUN tar xvfz /tmp/s6-portable-utils.tar.gz -C /
 ## INIT
 ##
 
-RUN chmod +x /init /init-s6
+RUN chmod +x /init
 CMD ["/init"]
 
 ##
