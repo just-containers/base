@@ -5,6 +5,7 @@
 forbacktickx i { find /etc/s6 -maxdepth 1 -type d ! -name ".*" ! -path /etc/s6 }
 import i
 foreground {
+  if { s6-test -f ${i}/finish }
   foreground { pipeline { echo "[s6-finish] executing ${i}/finish ..." } ts }
   foreground { tryexec { ${i}/finish } true }
   foreground { pipeline { echo "[s6-finish] done." } ts }
