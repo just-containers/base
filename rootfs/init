@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# abort if any script fails
+set -e
+
 # for loop should no loop if files weren't found
 shopt -s nullglob
 
@@ -32,7 +35,9 @@ echo "[pub-cont-envs] done." | ts
 
 echo "[fix-attrs] fixing file attributes (ownership & permission)..." | ts
 for file in /etc/fix-attrs.d/*; do
+  echo "[fix-attrs] $file: applying..." | ts
   /usr/bin/fix-attrs fix $file
+  echo "[fix-attrs] $file: done." | ts
 done
 echo "[fix-attrs] done." | ts
 
@@ -46,11 +51,14 @@ s6-sync
 ## cont-init.d
 ##
 
-echo "[cont-init.d] executing cont-init.d..." | ts
+echo "[cont-init.d] executing container initialization scripts..." | ts
 for file in /etc/cont-init.d/*; do
+  echo "[cont-init.d] $file: executing..." | ts
   /usr/bin/with-contenv $file
+  echo "[cont-init.d] $file: done." | ts
 done
 echo "[cont-init.d] done." | ts
+
 
 ##
 ## startup
