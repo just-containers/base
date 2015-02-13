@@ -12,7 +12,8 @@ COPY rootfs /
 ADD https://github.com/glerchundi/fix-attrs/releases/download/v0.3.0/fix-attrs-0.3.0-linux-amd64 /usr/bin/fix-attrs
 
 # provide exec permission to basic utils
-RUN chmod +x /usr/bin/apt-dpkg-wrapper \
+RUN chmod +x /usr/bin/apt-cleanup      \
+             /usr/bin/apt-dpkg-wrapper \
              /usr/bin/apt-get-install  \
              /usr/bin/with-contenv     \
              /usr/bin/ts               \
@@ -97,4 +98,4 @@ CMD ["/init"]
 ## CLEANUP
 ##
 
-RUN apt-get-min clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-cleanup
