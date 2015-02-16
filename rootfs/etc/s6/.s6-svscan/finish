@@ -6,12 +6,13 @@ forbacktickx i { find /etc/s6 -maxdepth 1 -type d ! -name ".*" ! -path /etc/s6 }
 import i
 foreground {
   if { s6-test -f ${i}/finish }
-  foreground { pipeline { echo "[s6-finish] executing ${i}/finish ..." } ts }
-  foreground { tryexec { ${i}/finish } true }
-  foreground { pipeline { echo "[s6-finish] done." } ts }
+    foreground { pipeline { echo "[s6-finish] executing ${i}/finish ..." } ts }
+    foreground { tryexec { ${i}/finish } true }
+    foreground { pipeline { echo "[s6-finish] done." } ts }
 }
 
 # Make sure we have no open handle to anywhere else than /dev/console
+
 cd /
 redirfd -w 1 /dev/console
 fdmove -c 2 1
@@ -31,10 +32,11 @@ foreground { tryexec { s6-nuke -k } true }
 
 # Close stdin here cause we wanted to pipe to echo in order to
 # get timestamped lines.
+
 fdclose 0
 
 # Yes, it helps.
-foreground { pipeline { echo "[s6-finish] syncing disks.." } ts }
+foreground { pipeline { echo "[s6-finish] syncing disks." } ts }
 foreground { s6-sync } 
 
 # Here, s6-nuke sends a SIGKILL to every process on the system.

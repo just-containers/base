@@ -76,15 +76,15 @@ RUN apt-get-install-min language-pack-en        && \
     update-locale LANG=$LANG LC_CTYPE=$LC_CTYPE
 
 # execline
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.0.0/execline-2.0.2.0-linux-amd64.tar.gz /tmp/execline.tar.gz
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.1.0/execline-2.0.2.1-linux-amd64.tar.gz /tmp/execline.tar.gz
 RUN tar xvfz /tmp/execline.tar.gz -C /
 
 # s6 init system
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.0.0/s6-2.1.0.1-linux-amd64.tar.gz /tmp/s6.tar.gz
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.1.0/s6-2.1.1.0-linux-amd64.tar.gz /tmp/s6.tar.gz
 RUN tar xvfz /tmp/s6.tar.gz -C /
 
 # s6 portable utils
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.0.0/s6-portable-utils-2.0.0.1-linux-amd64.tar.gz /tmp/s6-portable-utils.tar.gz
+ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.1.0/s6-portable-utils-2.0.0.1-linux-amd64.tar.gz /tmp/s6-portable-utils.tar.gz
 RUN tar xvfz /tmp/s6-portable-utils.tar.gz -C /
 
 ##
