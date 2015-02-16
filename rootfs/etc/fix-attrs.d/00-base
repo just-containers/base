@@ -12,6 +12,10 @@
     "attr": "root:root:0700"
   },
   {
+    "path": "/etc/s6/*/log/run",
+    "attr": "root:root:0700"
+  },
+  {
     "path": "/etc/cont-init.d/*",
     "attr": "root:root:0700"
   },
