@@ -78,7 +78,7 @@ RUN tar xvfz /tmp/s6-overlay.tar.gz -C /
 ## INIT
 ##
 
-CMD ["/init"]
+ENTRYPOINT ["/init"]
 
 ##
 ## CLEANUP
