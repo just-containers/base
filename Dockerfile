@@ -8,16 +8,11 @@ MAINTAINER Gorka Lerchundi Osa <glertxundi@gmail.com>
 # root filesystem
 COPY rootfs /
 
-# fix-attrs
-ADD https://github.com/glerchundi/fix-attrs/releases/download/v0.3.0/fix-attrs-0.3.0-linux-amd64 /usr/bin/fix-attrs
-
 # provide exec permission to basic utils
-RUN chmod +x /usr/bin/apt-cleanup      \
-             /usr/bin/apt-dpkg-wrapper \
-             /usr/bin/apt-get-install  \
-             /usr/bin/with-contenv     \
-             /usr/bin/ts               \
-             /usr/bin/fix-attrs
+RUN chmod +x /usr/bin/apt-cleanup       \
+             /usr/bin/apt-dpkg-wrapper  \
+             /usr/bin/apt-get-install   \
+             /usr/bin/ts                
 
 # create *min files for apt* and dpkg* in order to avoid issues with locales
 # and interactive interfaces
@@ -75,23 +70,14 @@ RUN apt-get-install-min language-pack-en        && \
     locale-gen en_US                            && \
     update-locale LANG=$LANG LC_CTYPE=$LC_CTYPE
 
-# execline
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.2.0/execline-2.1.0.0-linux-amd64.tar.gz /tmp/execline.tar.gz
-RUN tar xvfz /tmp/execline.tar.gz -C /
-
-# s6 init system
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.2.0/s6-2.1.1.2-linux-amd64.tar.gz /tmp/s6.tar.gz
-RUN tar xvfz /tmp/s6.tar.gz -C /
-
-# s6 portable utils
-ADD https://github.com/glerchundi/container-s6-builder/releases/download/v1.2.0/s6-portable-utils-2.0.0.1-linux-amd64.tar.gz /tmp/s6-portable-utils.tar.gz
-RUN tar xvfz /tmp/s6-portable-utils.tar.gz -C /
+# s6 overlay
+ADD https://github.com/glerchundi/container-s6-overlay-builder/releases/download/v0.1.0/s6-overlay-0.1.0-linux-amd64.tar.gz /tmp/s6-overlay.tar.gz
+RUN tar xvfz /tmp/s6-overlay.tar.gz -C /
 
 ##
 ## INIT
 ##
 
-RUN chmod +x /init
 CMD ["/init"]
 
 ##
