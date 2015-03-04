@@ -71,7 +71,7 @@ RUN apt-get-install-min language-pack-en        && \
     update-locale LANG=$LANG LC_CTYPE=$LC_CTYPE
 
 # s6 overlay
-ADD https://github.com/glerchundi/container-s6-overlay-builder/releases/download/v0.1.0/s6-overlay-0.1.0-linux-amd64.tar.gz /tmp/s6-overlay.tar.gz
+ADD https://github.com/just-containers/s6-overlay-builder/releases/download/v1.4.0/s6-overlay-1.4.0-portable-amd64.tar.gz /tmp/s6-overlay.tar.gz
 RUN tar xvfz /tmp/s6-overlay.tar.gz -C /
 
 ##
