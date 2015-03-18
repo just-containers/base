@@ -11,8 +11,7 @@ COPY rootfs /
 # provide exec permission to basic utils
 RUN chmod +x /usr/bin/apt-cleanup       \
              /usr/bin/apt-dpkg-wrapper  \
-             /usr/bin/apt-get-install   \
-             /usr/bin/ts                
+             /usr/bin/apt-get-install
 
 # create *min files for apt* and dpkg* in order to avoid issues with locales
 # and interactive interfaces
