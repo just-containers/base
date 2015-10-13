@@ -8,11 +8,6 @@ MAINTAINER Gorka Lerchundi Osa <glertxundi@gmail.com>
 # root filesystem
 COPY rootfs /
 
-# provide exec permission to basic utils
-RUN chmod +x /usr/bin/apt-cleanup       \
-             /usr/bin/apt-dpkg-wrapper  \
-             /usr/bin/apt-get-install
-
 # create *min files for apt* and dpkg* in order to avoid issues with locales
 # and interactive interfaces
 RUN ls /usr/bin/apt* /usr/bin/dpkg* |                                    \
@@ -70,7 +65,7 @@ RUN apt-get-install-min language-pack-en        && \
     update-locale LANG=$LANG LC_CTYPE=$LC_CTYPE
 
 # s6 overlay
-ADD https://github.com/just-containers/s6-overlay/releases/download/v1.14.0.4/s6-overlay-amd64.tar.gz /tmp/s6-overlay.tar.gz
+ADD https://github.com/just-containers/s6-overlay/releases/download/v1.15.0.0/s6-overlay-amd64.tar.gz /tmp/s6-overlay.tar.gz
 RUN tar xvfz /tmp/s6-overlay.tar.gz -C /
 
 ##
@@ -78,9 +73,3 @@ RUN tar xvfz /tmp/s6-overlay.tar.gz -C /
 ##
 
 ENTRYPOINT [ "/init" ]
-
-##
-## CLEANUP
-##
-
-RUN apt-cleanup

@@ -1,3 +1,5 @@
 #!/bin/sh
 
-exec apt-get install -y --no-install-recommends $@
+exec apt-get install -y --no-install-recommends $@ && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
