@@ -1,6 +1,0 @@
-#!/bin/sh
-
-apt-get-min clean
-rm -rf /var/lib/apt/lists/* \
-       /tmp/*               \
-       /var/tmp/*
