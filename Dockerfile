@@ -1,4 +1,4 @@
-FROM swaagie/base-without-s6:v18.04
+FROM quay.io/justcontainers/base-without-s6:v18.04
 MAINTAINER Gorka Lerchundi Osa <glertxundi@gmail.com>
 
 ##
